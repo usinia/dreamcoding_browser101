@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        /* overflow-y: hidden; */
+        background-color: black;
+        color: white;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .container {
+        display: flex;
+      }
+      .buttons {
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        text-align: right;
+      }
+      .button{
+        font-size: 20px;
+        padding: 5px;
+        margin: 5px;
+      }
+      .item {
+        width: 300px;
+        height: 300px;
+        background-color: blanchedalmond;
+        margin-bottom: 4px;
+        border-radius: 4px;
+      }
+      .item.active {
+        background-color: lightsalmon;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <ul>
+        <li class="item">a</li>
+        <li class="item"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+        <li class="item active"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+      </ul>
+      <aside class="buttons">
+        <button class="button by">Scroll by 100px(y)</button>
+        <button class="button to">Scroll to 100px(y)</button>
+        <button class="button into">Scroll into active</button>
+      </aside>
+    </div>
+
+    <script>
+      const active = document.querySelector(".item.active");
+      active.addEventListener("click", (evt) => {
+        /**
+         * viewport
+         * element 상단 왼쪽 끝점 기준
+         * x/left, y/top, x~오른쪽 가로 끝점 right, y~오른쪽 아래 끝점 bottom
+         */
+        const rect = active.getBoundingClientRect();
+        console.log("rect", rect);
+        /* https://developer.mozilla.org/ko/docs/Web/API/Element/getBoundingClientRect */
+
+        /**
+         * dom client 기준, rect 기준점부터 x, y 좌표
+         */
+        console.log(`client: ${evt.clientX}, ${evt.clientY}`);
+        /**
+         * page 기준, 최상단부터 x, y 좌표
+         */
+        console.log(`page: ${evt.pageX}, ${evt.pageY}`);
+        /* https://developer.mozilla.org/ko/docs/Web/API/Element/click_event */
+      });
+
+      const scrollBy = document.querySelector(".button.by");
+      const handleScrollBy = () => {
+        // window.scrollBy(0, 100);
+        window.scrollBy({
+          top: 100,
+          left: 0,
+          behavior: "smooth",
+        });
+      };
+      scrollBy.addEventListener("click", handleScrollBy);
+
+      const scrollTo = document.querySelector(".button.to");
+      const handleScrollTo = () => {
+        window.scrollTo(0, 100);
+      };
+      scrollTo.addEventListener("click", handleScrollTo);
+
+      const scrollInto = document.querySelector(".button.into");
+      const handleScrollInto = () => {
+        active.scrollIntoView();
+      };
+      scrollInto.addEventListener("click", handleScrollInto);
+
+    </script>
+  </body>
+</html>
