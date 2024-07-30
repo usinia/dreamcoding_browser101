@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Size</title>
+    <style>
+      .container {
+        display: inline-block;
+        background: thistle;
+      }
+      .tag {
+        display: inline-block;
+        background: thistle;
+        padding: 16px;
+        margin-top: 16px;
+        font-size: 48px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p class="screen">
+        window.screen:
+        <span class="width"></span>, <span class="height"></span>
+      </p>
+      <p class="outer">
+        window.outer:
+        <span class="width"></span>, <span class="height"></span>
+      </p>
+      <p class="inner">
+        window.inner:
+        <span class="width"></span>, <span class="height"></span>
+      </p>
+      <p class="client">
+        documentElement.clientWidth:
+        <span class="width"></span>, <span class="height"></span>
+      </p>
+    </div>
+
+    <br />
+
+    <div class="tag">Window Size</div>
+    <script>
+      // usinia
+      const setSize = () => {
+        // window.screen
+        document.querySelector(".screen .width").textContent =
+          window.screen.width;
+        document.querySelector(".screen .height").textContent =
+          window.screen.height;
+
+        // window.outer
+        document.querySelector(".outer .width").textContent = window.outerWidth;
+        document.querySelector(".outer .height").textContent =
+          window.outerHeight;
+
+        // window inner
+        document.querySelector(".inner .width").textContent = window.innerWidth;
+        document.querySelector(".inner .height").textContent =
+          window.innerHeight;
+
+        // documentElement.clientWidth
+        document.querySelector(".client .width").textContent =
+          document.documentElement.clientWidth;
+        document.querySelector(".client .height").textContent =
+          document.documentElement.clientHeight;
+      };
+      window.onload = function () {
+        setSize();
+      };
+      window.onresize = function () {
+        setSize();
+      };
+
+      // ellie
+      const tag = document.querySelector(".tag");
+      const updateTag = () => {
+        tag.innerHTML = `
+        window.screen: ${window.screen.width}, ${window.screen.height} <br />
+        window.outer: ${window.outerWidth}, ${window.outerHeight} <br />
+        window.inner: ${window.innerWidth}, ${window.innerHeight} <br />
+        documentElement.clientWidth: ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight} <br />
+        `;
+      };
+      updateTag();
+      window.addEventListener("resize", updateTag);
+    </script>
+  </body>
+</html>
