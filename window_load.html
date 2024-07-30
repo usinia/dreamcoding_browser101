@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Load</title>
+    <!-- defer: html ready -->
+    <script src="load.js" defer></script>
+  </head>
+  <body>
+    <script>
+      /*
+        1. 🚀 ~ js loaded ~
+        2. 🚀 ~ DOMContentLoaded ~
+        3. 🚀 ~ load ~
+        4. 🚀 ~ beforeunload ~
+      */
+      // only document : html ready
+      window.addEventListener("DOMContentLoaded", () => {
+        console.log("🚀 ~ DOMContentLoaded ~");
+      });
+
+      // after resources (css, images) : html + resources(font, css, images, etc) is ready
+      window.addEventListener("load", () => {
+        console.log("🚀 ~ load ~");
+      });
+
+      // before unload
+      window.addEventListener("beforeunload", () => {
+        console.log("🚀 ~ beforeunload ~");
+      });
+
+      // resource is being unloaded
+      /* 지원 중단 : https://developer.mozilla.org/ko/docs/Web/API/Window/unload_event
+      window.addEventListener("unload", () => {
+        console.log("🚀 ~ unload ~");
+      });
+      */
+    </script>
+  </body>
+</html>

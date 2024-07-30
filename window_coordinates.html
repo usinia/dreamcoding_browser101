@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Window Coordinates</title>
     <style>
       body {
         margin: 0;
@@ -51,10 +51,10 @@
         /**
          * viewport
          * element 상단 왼쪽 끝점 기준
-         * x/left, y/top, x~오른쪽 가로 끝점 right, y~오른쪽 아래 끝점 bottom 
+         * x/left, y/top, x~오른쪽 가로 끝점 right, y~오른쪽 아래 끝점 bottom
          */
         const rect = active.getBoundingClientRect();
-        console.log('rect', rect);
+        console.log("rect", rect);
         /* https://developer.mozilla.org/ko/docs/Web/API/Element/getBoundingClientRect */
 
         /**
