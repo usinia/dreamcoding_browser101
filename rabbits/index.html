@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll</title>
+    <style>
+      body {
+        background-color: black;
+        text-align: center;
+      }
+      .button {
+        outline: none;
+        border: none;
+        background-color: tomato;
+        color: white;
+        font-size: 32px;
+        margin: 16px 0;
+        padding: 5px 15px;
+        cursor: pointer;
+      }
+      .button:focus {
+        border: none;
+      }
+      .item {
+        display: block;
+        margin: auto;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="button">Find a rabbit 🐰</button>
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item rabbit" src="img/rabbit.png" alt="rabbit" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <img class="item carrot" src="img/carrot.png" alt="carrot" />
+    <script>
+      const button = document.querySelector(".button");
+      const rabbit = document.querySelector(".rabbit");
+      button.addEventListener("click", () => {
+        const rect = rabbit.getBoundingClientRect();
+        rabbit.scrollIntoView({ behavior: "smooth", block: "center" }); // start, center, end
+
+        // 계산하기 전에 문서를 잘 확인하자..!
+        // const clientHeight = document.documentElement.clientHeight;
+        // window.scrollTo({
+        //   left: rect.x,
+        //   top: rect.y - clientHeight / 2 + rect.height / 2,
+        //   behavior: "smooth",
+        // });
+      });
+    </script>
+  </body>
+</html>
