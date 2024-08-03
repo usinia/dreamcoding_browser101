@@ -8,6 +8,7 @@
       body {
         background-color: black;
         color: white;
+        margin: 0;
       }
       .line {
         position: absolute;
@@ -16,25 +17,26 @@
       .horizontal {
         width: 100%;
         height: 1px;
-        top: 50%;
+        /* top: 50%; */
       }
       .vertical {
         height: 100%;
         width: 1px;
-        left: 50%;
+        /* left: 50%; */
       }
       .target {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        /* top: 50%;
+        left: 50%; */
+        /* transform: translate(-50%, -50%); */
       }
       .tag {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        /* top: 50%;
+        left: 50%; */
         font-size: 38px;
-        transform: translate(20px, 20px);
+        /* transform: translate(20px, 20px); */
+        margin: 20px;
       }
     </style>
   </head>
@@ -48,6 +50,7 @@
       const vertical = document.querySelector(".vertical");
       const target = document.querySelector(".target");
       const tag = document.querySelector(".tag");
+      /*
       document.addEventListener("mousemove", (evt) => {
         const { x, y } = evt;
         tag.innerHTML = `${x}px, ${y}px`;
@@ -58,6 +61,25 @@
         target.style.top = `${y}px`;
         tag.style.left = `${x}px`;
         tag.style.top = `${y}px`;
+      });
+      */
+
+      // critical rendering path
+      // operation - layout, paint, composition
+      addEventListener("load", () => {
+        const targetRect = target.getBoundingClientRect();
+        const targetHalfWidth = targetRect.width / 2;
+        const targetHalfHeight = targetRect.height / 2;
+        document.addEventListener("mousemove", (evt) => {
+          const { x, y } = evt;
+          tag.innerHTML = `${x}px, ${y}px`;
+          horizontal.style.transform = `translateY(${y}px)`;
+          vertical.style.transform = `translateX(${x}px)`;
+          target.style.transform = `translate(${x - targetHalfWidth}px, ${
+            y - targetHalfHeight
+          }px)`;
+          tag.style.transform = `translate(${x}px, ${y}px)`;
+        });
       });
     </script>
   </body>
