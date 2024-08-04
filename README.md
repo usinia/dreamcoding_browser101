@@ -140,3 +140,7 @@
 
 - [css triggers](https://www.lmame-geek.com/css-triggers/)
 - [box shawdows](https://ui.aceternity.com/tools/box-shadows)
+- [CSS Gradient](https://cssgradient.io/)
+- [Box Shadow CSS Generator 1](https://www.cssmatic.com/box-shadow)
+- [Box Shadow CSS Generator 2](https://html-css-js.com/css/generator/box-shadow/)
+- [color 조합 추천](https://color.adobe.com/ko/create/color-wheel)
