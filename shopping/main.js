@@ -3,7 +3,11 @@ const input = document.querySelector(".footer__input");
 const addBtn = document.querySelector(".footer__button");
 
 addBtn.addEventListener("click", onAdd);
-input.addEventListener("keypress", (event) => {
+// keypress : deprecated
+// keydown : 한글 입력시 2번씩 입력됨
+// keyup 사용 or event.isComposing (입력중) 확인해서 처리
+input.addEventListener("keydown", (event) => {
+  if (event.isComposing) return;
   if (event.key === "Enter") onAdd();
 });
 
