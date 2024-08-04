@@ -27,15 +27,21 @@
     <div></div>
     <div></div>
     <script>
-      document.addEventListener("wheel", (event) => {
-        console.log("scrolling");
-        event.preventDefault();
-      });
+      document.addEventListener(
+        "wheel",
+        (event) => {
+          // passive event - default : true, do browser's job first, logic later
+          console.log("scrolling");
+          event.preventDefault();
+        },
+        { passive: false } // options for do preventDefault, not recommended
+      );
       const checkbox = document.querySelector("input");
       checkbox.addEventListener("click", (event) => {
+        // do logic first, browser's job later
         // long
         console.log("checked");
-        event.preventDefault();
+        event.preventDefault(); // cancel browser's job
       });
     </script>
   </body>

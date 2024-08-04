@@ -34,27 +34,39 @@
       </div>
     </div>
     <script>
+      /**
+       * stopPropagation, stopImmediatePropagation
+       * - 다른 곳에서 등록한 모든 event 를 취소하기 때문에 위험. 사용을 지양!
+       * - 부모에 관심이 있을 때만 사용 : event.target !== event.currentTarget
+       */
       const outer = document.querySelector(".outer");
       const middle = document.querySelector(".middle");
       const button = document.querySelector("button");
 
       outer.addEventListener("click", (event) => {
+        // 4번째
         if (event.target !== event.currentTarget) {
           return;
         }
         console.log(`outer: ${event.currentTarget}, ${event.target}`);
       });
       middle.addEventListener("click", (event) => {
+        // 3번째
         if (event.target !== event.currentTarget) {
           return;
         }
         console.log(`middle ${event.currentTarget}, ${event.target}`);
       });
       button.addEventListener("click", (event) => {
+        // 1번째
         console.log(`button1 ${event.currentTarget}, ${event.target}`);
+        // event.stopPropagation(); /* 부모 이벤트 전달 멈춤 : button1, button2 */
+        // event.stopImmediatePropagation(); /* 지금 당장 멈춤 (자기 자신까지만) : button1 */
       });
       button.addEventListener("click", (event) => {
+        // 2번째
         console.log(`button2 ${event.currentTarget}, ${event.target}`);
+        // event.stopImmediatePropagation(); /* 2번째 등록된 이벤트여서 button1, button2, 이후 등록된 event 멈춤 */
       });
     </script>
   </body>
