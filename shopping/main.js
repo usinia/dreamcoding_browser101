@@ -1,7 +1,14 @@
 const items = document.querySelector(".items");
+const form = document.querySelector(".new-form");
 const input = document.querySelector(".footer__input");
 const addBtn = document.querySelector(".footer__button");
 
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  onAdd();
+});
+
+/*
 addBtn.addEventListener("click", onAdd);
 // keypress : deprecated
 // keydown : 한글 입력시 2번씩 입력됨
@@ -10,6 +17,7 @@ input.addEventListener("keydown", (event) => {
   if (event.isComposing) return;
   if (event.key === "Enter") onAdd();
 });
+*/
 
 function onAdd() {
   const text = input.value;
