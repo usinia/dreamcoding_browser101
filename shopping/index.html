@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Carts</title>
+    <style>
+      body {
+        /* background-image: url(); */
+        background-color: lightblue;
+        height: 100vh;
+      }
+      main {
+        position: relative;
+        width: 40%;
+        height: 95%;
+        border-radius: 25px;
+        margin: auto;
+        margin-top: 30px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+          rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        background: linear-gradient(
+          90deg,
+          rgb(241, 164, 244) 0%,
+          rgb(158, 219, 231) 70%,
+          rgba(95, 196, 231, 1) 100%
+        );
+        overflow: hidden;
+      }
+      header,
+      section {
+        text-align: center;
+        font-size: 30px;
+        color: white;
+        box-sizing: border-box;
+        height: 30px;
+        padding: 5px 0;
+      }
+      header {
+        padding: 10px 15px;
+        height: 50px;
+      }
+      .list {
+        overflow-y: auto;
+        height: calc(98% - 50px - 70px);
+        background-color: rgba(240, 240, 240, 0.857);
+        color: black;
+        font-size: 18px;
+        text-align: left;
+        padding: 5px 10px;
+      }
+      button {
+        outline: none;
+        border: none;
+      }
+      .item .delete {
+        position: absolute;
+        right: 10px;
+      }
+      .item .delete::after {
+        content: "delete";
+      }
+      .item .delete:hover {
+        background-color: red;
+        color: white;
+      }
+      #item {
+        width: 100%;
+        border: none;
+        font-size: 20px;
+      }
+      .add button {
+        background-color: black;
+        border-radius: 100%;
+        color: white;
+        font-size: 25px;
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>Shopping List</header>
+      <section class="list">
+        <!-- <div class="item">
+          <span>text</span>
+          <button class="delete"></button>
+        </div> -->
+      </section>
+      <section class="input">
+        <input type="text" id="item" />
+      </section>
+      <section class="add">
+        <button>+</button>
+      </section>
+    </main>
+    <script>
+      const list = document.querySelector(".list");
+      const input = document.querySelector("#item");
+      const addBtn = document.querySelector(".add button");
+
+      input.addEventListener("keypress", (evt) => {
+        if (evt.key === "Enter") handleAddItem();
+      });
+      addBtn.addEventListener("click", () => handleAddItem());
+
+      const handleAddItem = () => {
+        const text = input.value;
+        if (!text) return;
+
+        list.insertAdjacentHTML(
+          "beforeend",
+          `<div class="item">
+            <span>${text}</span>
+            <button class="delete" onclick="handleDeleteItem(this)"></button>
+          </div>`
+        );
+        input.value = "";
+      };
+
+      const handleDeleteItem = (target) => {
+        if (target) target.parentNode.remove();
+      };
+    </script>
+  </body>
+</html>
