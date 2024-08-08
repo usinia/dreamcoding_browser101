@@ -12,6 +12,20 @@ button {
   border: none;
   outline: none;
   background: transparent;
+
+  width: 30px;
+  height: 30px;
+  background-color: wheat;
+  font-size: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.carrot,
+.bug {
+  position: absolute;
+  display: none;
 }
 
 .carrot::after {
@@ -33,16 +47,6 @@ button {
 .play {
   text-align: center;
   margin: 10px auto;
-}
-
-.play__btn {
-  width: 30px;
-  height: 30px;
-  background-color: wheat;
-  font-size: 20px;
-  border: 2px solid black;
-  border-radius: 5px;
-  padding: 0;
 }
 
 .play__btn--play::after {
@@ -75,6 +79,11 @@ button {
   margin: 10px auto;
 }
 
+.container {
+  height: calc(100vh - 100px);
+  position: relative;
+}
+
 .modal {
   display: none;
   position: absolute;
@@ -90,14 +99,6 @@ button {
   text-align: center;
 }
 
-.modal__retry {
-  background-color: bisque;
-  opacity: 1;
-  width: 30px;
-  height: 30px;
-  border-radius: 5px;
-}
-
-.modal__retry::after {
+.retry__btn::after {
   content: "R";
 }
