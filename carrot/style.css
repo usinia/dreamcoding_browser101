@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: url("img/background.png") no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.carrot::after {
+  content: "";
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  background: url("img/carrot.png");
+}
+
+.bug::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background: url("img/bug.png");
+}
+
+.play {
+  text-align: center;
+  margin: 10px auto;
+}
+
+.play__btn {
+  width: 30px;
+  height: 30px;
+  background-color: wheat;
+  font-size: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.play__btn--play::after {
+  content: ">";
+}
+
+.play__btn--stop::after {
+  content: "ㅁ";
+}
+
+.timer {
+  width: 100px;
+  text-align: center;
+  background: white;
+  border-radius: 5px;
+  outline: 2px solid black;
+  margin: 10px auto;
+  padding: 3px;
+}
+
+.counter {
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: lightsalmon;
+  outline: 2px solid black;
+  color: white;
+  font-size: 25px;
+  margin: 10px auto;
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 220px;
+  padding: 3px;
+  border-radius: 10px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-110px);
+  color: white;
+  font-size: 25px;
+  text-align: center;
+}
+
+.modal__retry {
+  background-color: bisque;
+  opacity: 1;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.modal__retry::after {
+  content: "R";
+}
