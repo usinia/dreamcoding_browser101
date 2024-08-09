@@ -18,16 +18,21 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+field.addEventListener("click", onFieldClick);
 gameBtn.addEventListener("click", () => {
   if (started) {
     stopGame();
   } else {
     startGame();
   }
-  started = !started;
+});
+popupRefresh.addEventListener("click", () => {
+  startGame();
+  hidePopup();
 });
 
 function startGame() {
+  started = true;
   initGame();
   showStopButton();
   showTimerAndScore();
@@ -35,15 +40,24 @@ function startGame() {
 }
 
 function stopGame() {
+  started = false;
   stopGameTimer();
   hideGameButton();
   showPopupWithText("REPLAY? 😃");
 }
 
+function finishGame(win) {
+  started = false;
+  hideGameButton();
+  stopGameTimer();
+  showPopupWithText(win ? "YOU WON 🎉" : "YOU LOST 💩");
+}
+
 function showStopButton() {
-  const icon = gameBtn.querySelector(".fa-play");
+  const icon = gameBtn.querySelector(".fas");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
+  gameBtn.style.visibility = "visible";
 }
 
 function hideGameButton() {
@@ -61,6 +75,7 @@ function startGameTimer() {
   timer = setInterval(() => {
     if (remainingTimeSec <= 0) {
       clearInterval(timer);
+      finishGame(score === COUNT);
       return;
     }
     updateTimerText(--remainingTimeSec);
@@ -82,12 +97,40 @@ function showPopupWithText(text) {
   popup.classList.remove("pop-up--hide");
 }
 
+function hidePopup() {
+  popup.classList.add("pop-up--hide");
+}
+
 function initGame() {
+  score = 0;
   field.innerHTML = "";
   gameScore.innerText = COUNT;
 
   addItem("carrot", COUNT, "img/carrot.png");
   addItem("bug", COUNT, "img/bug.png");
+}
+
+function onFieldClick(event) {
+  if (!started) {
+    return;
+  }
+  const target = event.target;
+
+  if (target.matches(".carrot")) {
+    target.remove();
+    score++;
+    updateScoreBoard();
+    if (score === COUNT) {
+      finishGame(true);
+    }
+  } else if (target.matches(".bug")) {
+    stopGameTimer();
+    finishGame(false);
+  }
+}
+
+function updateScoreBoard() {
+  gameScore.innerText = COUNT - score;
 }
 
 function addItem(className, count, imgPath) {
