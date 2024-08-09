@@ -113,15 +113,9 @@ function randomNum(min, max) {
 function getPosition() {
   // rect.top ~ rect.bottom, rect.left ~ rect.right
   const rect = container.getBoundingClientRect();
-
-  let top = randomNum(0, rect.height);
-  // if (top > rect.height) top -= rect.height;
-  // if (top < rect.top) top += rect.top;
-
-  let left = randomNum(rect.left, rect.width);
-  // if (left > rect.right) top -= rect.right;
-  // if (left < rect.left) top += rect.left;
-
+  const imageSize = 80; // 요소의 시작점을 기준으로 위치를 지정하기 때문에 image size 만큼 빼준다.
+  let top = randomNum(0, rect.height - imageSize);
+  let left = randomNum(0, rect.width - imageSize);
   return [top, left];
 }
 
