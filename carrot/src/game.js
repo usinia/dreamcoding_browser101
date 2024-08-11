@@ -3,7 +3,13 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
-export default class GameBuilder {
+export const Reason = Object.freeze({
+  win: "win",
+  lose: "lose",
+  cancel: "cancel",
+});
+
+export class GameBuilder {
   withGameDuration(duration) {
     this.gameDuration = duration;
     return this;
@@ -33,7 +39,7 @@ class Game {
 
     this.gameBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop();
+        this.stop(Reason.cancel);
       } else {
         this.start();
       }
@@ -58,10 +64,10 @@ class Game {
       this.updateScoreBoard(this.count - this.score);
       sound.playCarrotSound();
       if (this.score === this.count) {
-        this.finish(true);
+        this.stop(Reason.win);
       }
     } else if (item === "bug") {
-      this.finish(false);
+      this.stop(Reason.lose);
     }
   };
 
@@ -74,22 +80,12 @@ class Game {
     sound.playBgSound();
   }
 
-  stop() {
+  stop(reason) {
     this.started = false;
     this.stopTimer();
     this.hideGameButton();
-    this.onGameStop("cancel");
-    sound.playAlertSound();
+    this.onGameStop(reason);
     sound.stopBgSound();
-  }
-
-  finish(win) {
-    this.started = false;
-    this.hideGameButton();
-    win ? sound.playWinSound() : sound.playBugSound();
-    this.stopTimer();
-    sound.stopBgSound();
-    this.onGameStop(win ? "win" : "lose");
   }
 
   startTimer() {
@@ -98,7 +94,7 @@ class Game {
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
         clearInterval(this.timer);
-        this.finish(this.score === this.count);
+        this.stop(this.score === this.count ? Reason.win : Reason.lose);
         return;
       }
       this.updateTimerText(--remainingTimeSec);
