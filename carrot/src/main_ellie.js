@@ -1,5 +1,7 @@
 "use strict";
 
+import Popup from "./popup.js";
+
 const IMAGE_SIZE = 80;
 const COUNT = 5;
 const GAME_DURATION = 5;
@@ -9,10 +11,6 @@ const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector(".game__button");
 const gameTimer = document.querySelector(".game__timer");
 const gameScore = document.querySelector(".game__score");
-
-const popup = document.querySelector(".pop-up");
-const popupText = document.querySelector(".pop-up__message");
-const popupRefresh = document.querySelector(".pop-up__refresh");
 
 const bgSound = new Audio("sound/bg.mp3");
 const alertSound = new Audio("sound/alert.wav");
@@ -24,6 +22,8 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+const gameFinishBanner = new Popup();
+
 field.addEventListener("click", onFieldClick);
 gameBtn.addEventListener("click", () => {
   if (started) {
@@ -32,10 +32,7 @@ gameBtn.addEventListener("click", () => {
     startGame();
   }
 });
-popupRefresh.addEventListener("click", () => {
-  startGame();
-  hidePopup();
-});
+gameFinishBanner.setClickListener(startGame);
 
 function startGame() {
   started = true;
@@ -50,7 +47,7 @@ function stopGame() {
   started = false;
   stopGameTimer();
   hideGameButton();
-  showPopupWithText("REPLAY? 😃");
+  gameFinishBanner.showWithText("REPLAY? 😃");
   playSound(alertSound);
   stopSound(bgSound);
 }
@@ -61,7 +58,7 @@ function finishGame(win) {
   playSound(win ? winSound : bugSound);
   stopGameTimer();
   stopSound(bgSound);
-  showPopupWithText(win ? "YOU WON 🎉" : "YOU LOST 💩");
+  gameFinishBanner.showWithText(win ? "YOU WON 🎉" : "YOU LOST 💩");
 }
 
 function showStopButton() {
@@ -101,15 +98,6 @@ function updateTimerText(time) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   gameTimer.innerText = `${minutes}:${seconds}`;
-}
-
-function showPopupWithText(text) {
-  popupText.innerText = text;
-  popup.classList.remove("pop-up--hide");
-}
-
-function hidePopup() {
-  popup.classList.add("pop-up--hide");
 }
 
 function initGame() {
