@@ -2,14 +2,11 @@
 
 import Popup from "./popup.js";
 import Field from "./field.js";
+import Game from "./game.js";
 import * as sound from "./sound.js";
 
 const COUNT = 5;
 const GAME_DURATION = 5;
-
-const gameBtn = document.querySelector(".game__button");
-const gameTimer = document.querySelector(".game__timer");
-const gameScore = document.querySelector(".game__score");
 
 let started = false;
 let score = 0;
@@ -17,9 +14,10 @@ let timer = undefined;
 
 const gameFinishBanner = new Popup();
 const gameField = new Field(COUNT);
+const game = new Game(COUNT, GAME_DURATION);
 
 gameField.setClickListener(onFieldClick);
-gameBtn.addEventListener("click", () => {
+game.setClickListener(() => {
   if (started) {
     stopGame();
   } else {
@@ -31,16 +29,16 @@ gameFinishBanner.setClickListener(startGame);
 function startGame() {
   started = true;
   initGame();
-  showStopButton();
-  showTimerAndScore();
+  game.showStopButton();
+  game.showTimerAndScore();
   startGameTimer();
   sound.playBgSound();
 }
 
 function stopGame() {
   started = false;
-  stopGameTimer();
-  hideGameButton();
+  game.stopGameTimer();
+  game.hideGameButton();
   gameFinishBanner.showWithText("REPLAY? 😃");
   sound.playAlertSound();
   sound.stopBgSound();
@@ -48,39 +46,23 @@ function stopGame() {
 
 function finishGame(win) {
   started = false;
-  hideGameButton();
+  game.hideGameButton();
   win ? sound.playWinSound() : sound.playBugSound();
   stopGameTimer();
   sound.stopBgSound();
   gameFinishBanner.showWithText(win ? "YOU WON 🎉" : "YOU LOST 💩");
 }
 
-function showStopButton() {
-  const icon = gameBtn.querySelector(".fas");
-  icon.classList.add("fa-stop");
-  icon.classList.remove("fa-play");
-  gameBtn.style.visibility = "visible";
-}
-
-function hideGameButton() {
-  gameBtn.style.visibility = "hidden";
-}
-
-function showTimerAndScore() {
-  gameTimer.style.visibility = "visible";
-  gameScore.style.visibility = "visible";
-}
-
 function startGameTimer() {
   let remainingTimeSec = GAME_DURATION;
-  updateTimerText(remainingTimeSec);
+  game.updateTimerText(remainingTimeSec);
   timer = setInterval(() => {
     if (remainingTimeSec <= 0) {
       clearInterval(timer);
       finishGame(score === COUNT);
       return;
     }
-    updateTimerText(--remainingTimeSec);
+    game.updateTimerText(--remainingTimeSec);
   }, 1000);
 }
 
@@ -88,15 +70,9 @@ function stopGameTimer() {
   clearInterval(timer);
 }
 
-function updateTimerText(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  gameTimer.innerText = `${minutes}:${seconds}`;
-}
-
 function initGame() {
   score = 0;
-  gameScore.innerText = COUNT;
+  game.updateScoreBoard(COUNT);
   gameField.init();
 }
 
@@ -107,7 +83,7 @@ function onFieldClick(event) {
 
   if (event === "carrot") {
     score++;
-    updateScoreBoard();
+    game.updateScoreBoard(COUNT - score);
     sound.playCarrotSound();
     if (score === COUNT) {
       finishGame(true);
@@ -115,8 +91,4 @@ function onFieldClick(event) {
   } else if (event === "bug") {
     finishGame(false);
   }
-}
-
-function updateScoreBoard() {
-  gameScore.innerText = COUNT - score;
 }
