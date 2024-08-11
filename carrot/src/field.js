@@ -2,7 +2,12 @@
 
 const IMAGE_SIZE = 80;
 
-export default class Field {
+export const ItemType = Object.freeze({
+  carrot: "carrot",
+  bug: "bug",
+});
+
+export class Field {
   constructor(count) {
     this.count = count;
     this.field = document.querySelector(".game__field");
