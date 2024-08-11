@@ -1,16 +1,18 @@
 "use strict";
 
 import Popup from "./popup.js";
-import Game from "./game.js";
+import GameBuilder from "./game.js";
 
 const COUNT = 5;
 const GAME_DURATION = 5;
 
-const game = new Game(GAME_DURATION, COUNT);
+const gameBuilder = new GameBuilder()
+  .withGameDuration(GAME_DURATION)
+  .withCount(COUNT)
+  .build();
 
 const gameFinishBanner = new Popup();
-game.setGameStopListener((reason) => {
-  console.log("setGameStopListener", reason);
+gameBuilder.setGameStopListener((reason) => {
   let message;
   switch (reason) {
     case "win":
@@ -29,5 +31,5 @@ game.setGameStopListener((reason) => {
 });
 
 gameFinishBanner.setClickListener(() => {
-  game.start();
+  gameBuilder.start();
 });

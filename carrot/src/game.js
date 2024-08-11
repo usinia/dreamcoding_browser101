@@ -3,7 +3,23 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
-export default class Game {
+export default class GameBuilder {
+  withGameDuration(duration) {
+    this.gameDuration = duration;
+    return this;
+  }
+
+  withCount(count) {
+    this.count = count;
+    return this;
+  }
+
+  build() {
+    return new Game(this.gameDuration, this.count);
+  }
+}
+
+class Game {
   constructor(gameDuration, count) {
     this.gameDuration = gameDuration;
     this.count = count;
@@ -73,7 +89,7 @@ export default class Game {
     win ? sound.playWinSound() : sound.playBugSound();
     this.stopTimer();
     sound.stopBgSound();
-    this.onGameStop(this.win ? "win" : "lose");
+    this.onGameStop(win ? "win" : "lose");
   }
 
   startTimer() {
